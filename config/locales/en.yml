@@ -1,3 +1,17 @@
 # English strings go here for Rails i18n
 en:
-  # my_label: "My label"
+  label_user_notify_for_all_fields: "Notify for all issue fields"
+  notification_event_status_changed: "Status changed"
+  notification_event_issue_closed: "Issue closed"
+  notification_event_issue_reopened: "Issue reopened"
+  notification_event_priority_changed: "Priority changed"
+  notification_event_assignee_changed: "Assignee changed"
+  notification_event_assignee_changed_to_me: "Assignee changed to me"
+  notification_event_assignee_changed_from_me: "Assignee changed from me"
+  notification_event_category_changed: "Category changed"
+  notification_event_target_version_changed: "Target version changed"
+  notification_event_start_date_changed: "Start date changed"
+  notification_event_due_date_changed: "Due date changed"
+  notification_event_description_changed: "Description changed"
+  notification_event_issue_commented_on: "Commented on"
+  notification_event_custom_field_changed: "%{name} changed"

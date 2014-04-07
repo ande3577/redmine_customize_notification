@@ -1,0 +1,45 @@
+<% content_for :header_tags do %>
+    <%= javascript_include_tag 'customize_notification', :plugin => 'redmine_customize_notification' %>
+    <%= stylesheet_link_tag 'customize_notification', :plugin => 'redmine_customize_notification' %>
+<% end %>
+
+<p>
+<%= label_tag "user_mail_notification", l(:description_user_mail_notification), :class => "hidden-for-sighted" %>
+<%= select_tag(
+      'user[mail_notification]',
+      options_for_select(
+         user_mail_notification_options(@user), @user.mail_notification),
+      :onchange => 'if (this.value == "selected") {$("#notified-projects").show();} else {$("#notified-projects").hide();} if (this.value == "none") {$("#notified-issue-fields").hide();} else {$("#notified-issue-fields").show();}'
+     ) %>
+</p>
+<%= content_tag 'div', :id => 'notified-projects', :style => (@user.mail_notification == 'selected' ? '' : 'display:none;') do %>
+  <%= render_project_nested_lists(@user.projects) do |project|
+        content_tag('label', 
+          check_box_tag(
+            'user[notified_project_ids][]',
+             project.id,
+             @user.notified_projects_ids.include?(project.id),
+             :id => nil
+          ) + ' ' + h(project.name)
+        )
+      end %>
+  <%= hidden_field_tag 'user[notified_project_ids][]', '' %>
+  <p><em class="info"><%= l(:text_user_mail_option) %></em></p>
+<% end %>
+
+<%= fields_for :pref, @user.pref do |pref_fields| %>
+<p>
+  <%= content_tag 'div', :id => 'notified-issue-fields', 
+    :style => (@user.mail_notification == 'none' ? 'display:none;' : '') do %>
+    <%= pref_fields.check_box :notify_for_all_fields, :onchange => 'if (this.checked) {$("#notified-issue-fields-list").hide();} else {$("#notified-issue-fields-list").show();}'%>
+    <label for="pref_notify_for_all_fields"><%= l(:label_user_notify_for_all_fields) %></label>
+    <%= content_tag 'div', :id => 'notified-issue-fields-list', 
+        :style => (@user.notify_for_all_fields? ? 'display:none;' : '') do %>
+      <%= render_notification_events(@user, pref_fields) %>
+    <% end %>
+  <% end %>
+
+  <%= pref_fields.check_box :no_self_notified %>
+  <label for="pref_no_self_notified"><%= l(:label_user_mail_no_self_notified) %></label>
+</p>
+<% end %>
