@@ -23,6 +23,14 @@ module CustomizeNotificationUserPatch
     def custom_field_notifications
       get_preference_hash(:custom_field_notifications)
     end
+
+    def changed_to_me_notifications
+      get_preference_hash(:changed_to_me_notifications)
+    end
+
+    def changed_from_me_notifications
+      get_preference_hash(:changed_from_me_notifications)
+    end
   end
   
   private
