@@ -65,27 +65,34 @@ module CustomizeNotificationUsersHelperPatch
   end
 
   def user_custom_field_notification_checkboxes(field, user)
+    notify_on_field = user.custom_field_notifications.include?(field.id.to_s)
     h = '<li>'
     h << check_box_tag(
          'pref[custom_field_notifications][]',
          field.id,
-         user.custom_field_notifications.include?(field.id.to_s)
+         notify_on_field,
+         :onchange => "$(field_#{field.id}_changed_to_me).attr('disabled', this.checked);
+            $(field_#{field.id}_changed_from_me).attr('disabled', this.checked);"
       )
     h << t(:notification_event_custom_field_changed, :name => field.name)
     h << '</li>'
     h << '<ul><li>'
     h << check_box_tag(
-         'pref[custom_field_notifications][]',
+         'pref[changed_to_me_notifications][]',
          field.id,
-         user.changed_to_me_notifications.include?(field.id.to_s)
+         user.changed_to_me_notifications.include?(field.id.to_s),
+         :id => "field_#{field.id}_changed_to_me",
+         :disabled => notify_on_field
       )
     h << t(:notification_event_custom_field_changed_to_me, :name => field.name)
     h << '</li>'
     h << '<li>'
     h << check_box_tag(
-         'pref[custom_field_notifications][]',
+         'pref[changed_from_me_notifications][]',
          field.id,
-         user.changed_from_me_notifications.include?(field.id.to_s)
+         user.changed_from_me_notifications.include?(field.id.to_s),
+         :id => "field_#{field.id}_changed_from_me",
+         :disabled => notify_on_field
       )
     h << t(:notification_event_custom_field_changed_from_me, :name => field.name)
     h << '</li></ul>'
