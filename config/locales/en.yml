@@ -2,6 +2,7 @@
 en:
   label_user_notify_for_all_fields: "Notify for all issue fields"
   label_user_notify_for_selected_fields: "Notify for the selected fields only"
+  notification_event_tracker_changed: "Tracker changed"
   notification_event_status_changed: "Status changed"
   notification_event_issue_closed: "Issue closed"
   notification_event_issue_reopened: "Issue reopened"
