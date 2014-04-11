@@ -1,5 +1,6 @@
 module NotificationEvents
   ISSUE_EVENTS = {
+    :project_id => :notification_event_project_changed,
     :tracker_id => :notification_event_tracker_changed,
     :status_id => :notification_event_status_changed,
     :issue_closed => :notification_event_issue_closed,
