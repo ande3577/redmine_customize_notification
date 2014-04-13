@@ -5,6 +5,7 @@ module CustomizeNotificationUserPatch
     base.extend(ClassMethods)
     base.send(:include, InstanceMethods)
     base.class_eval do
+      extend NotificationEvents
     end
   end
   
@@ -12,8 +13,40 @@ module CustomizeNotificationUserPatch
   end
   
   module InstanceMethods
+    def notify_for_field?(field, old_value, new_value)
+      field = field.to_sym
+      case field
+      when :assigned_to_id
+        begin
+          return true if notify_for_attribute?(:issue_assignee_from_me) and old_value and is_or_belongs_to?(User.find(old_value))
+          return true if notify_for_attribute?(:issue_assignee_to_me) and new_value and is_or_belongs_to?(User.find(new_value))
+        rescue ActiveRecord::IndexNotFoundError
+        end
+      when :status_id
+        initial_closed = IssueStatus.find(old_value).is_closed?
+        final_closed = IssueStatus.find(new_value).is_closed?
+        return true if notify_for_attribute?(:issue_closed) and !initial_closed and final_closed
+        return true if notify_for_attribute?(:issue_reopened) and initial_closed and !final_closed
+      end
+      return notify_for_attribute?(field.to_sym)
+    end
+
+    def notify_for_custom_field?(custom_field_id, old_value, new_value)
+      return true if custom_field_notifications.include?(custom_field_id.to_s)
+      field = IssueCustomField.find(custom_field_id)
+      if field.field_format == 'user'
+        return true if changed_to_me_notifications.include?(custom_field_id.to_s) and new_value and is_or_belongs_to?(User.find(new_value))
+        return true if changed_from_me_notifications.include?(custom_field_id.to_s) and old_value and is_or_belongs_to?(User.find(old_value))
+      end
+      false
+    end
+
     def notify_for_all_fields?
       self.pref[:notify_for_all_fields]
+    end
+
+    def notify_for_attribute?(attribute)
+      enabled_notifications.include?(attribute.to_s)
     end
 
     def enabled_notifications

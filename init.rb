@@ -1,5 +1,6 @@
 require_dependency 'customize_notification_user_patch'
 require_dependency 'customize_notification_users_helper_patch'
+require_dependency 'customize_notification_journal_patch'
 
 Redmine::Plugin.register :redmine_customize_notification do
   name 'Redmine Customize Notification plugin'
