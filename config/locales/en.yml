@@ -20,7 +20,7 @@ en:
   notification_event_estimated_time_changed: "Estimated time changed"
   notification_event_percent_done_changed: "Percent done changed"
   notification_event_description_changed: "Description changed"
-  notification_event_issue_commented_on: "Commented on"
+  notification_event_issue_commented_on: "Issue commented added"
   notification_event_custom_field_changed: "%{name} changed"
   notification_event_custom_field_changed_to_me: "%{name} changed to me"
   notification_event_custom_field_changed_from_me: "%{name} changed from me"
