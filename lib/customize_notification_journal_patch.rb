@@ -42,6 +42,8 @@ module CustomizeNotificationJournalPatch
         return true if user.notify_for_field?(detail.prop_key, detail.old_value, detail.value)
       when 'cf'
         return true if user.notify_for_custom_field?(detail.prop_key, detail.old_value, detail.value)
+      when 'relation'
+        return true if user.notify_for_issue_relations?(detail.prop_key)
       else
         return true
       end

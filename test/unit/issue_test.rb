@@ -187,7 +187,7 @@ class IssueTest < ActiveSupport::TestCase
     update_user_custom_value nil.to_s
     assert notify_about?
   end
-  
+
   def test_notify_if_project_specific_custom_field_set
     return unless project_specific_plugin_installed?
     add_notification_attribute :psec_field_changed

@@ -18,7 +18,8 @@ module NotificationEvents
     :done_ratio => :notification_event_percent_done_changed,
     :estimated_hours => :notification_event_estimated_time_changed,
     :parent_issue_id => :notification_event_parent_issue_changed,
-    :notes => :notification_event_issue_commented_on
+    :notes => :notification_event_issue_commented_on,
+    :relation => :notification_event_issue_relation_changed
   }.freeze
   
   def dependent_event?(event)

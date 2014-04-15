@@ -24,5 +24,6 @@ en:
   notification_event_custom_field_changed: "%{name} changed"
   notification_event_custom_field_changed_to_me: "%{name} changed to me"
   notification_event_custom_field_changed_from_me: "%{name} changed from me"
+  notification_event_issue_relation_changed: "Issue relation changed"
   notification_event_project_specific_custom_field_changed: "Project specific custom field changed"
   text_user_custom_notification_fields_option: "When an issue is updated, you will receive a notification only if the selected fields are changed."

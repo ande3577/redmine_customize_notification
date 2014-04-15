@@ -46,6 +46,10 @@ module CustomizeNotificationUserPatch
       self.pref[:notify_for_all_fields]
     end
 
+    def notify_for_issue_relations?(relation_type)
+      notify_for_attribute?(:relation)
+    end
+
     def notify_for_attribute?(attribute)
       enabled_notifications.include?(attribute.to_s)
     end
