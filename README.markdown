@@ -17,6 +17,15 @@ Please report issues to:
 1.  Migrate the database
 1.  Restart server
 
+## Usage
+
+A user can filter notifications by selecting which field changes for which to 
+receive notifications.  The filter will be applied after filtering according to 
+the users normal mail settings (e.g. all events, only assigned to me, etc.) and 
+will only be applied when issues are modified 
+
+![account notification settings](assets/images/mail_settings.png "Notification settings in My Account")
+
 ## License
 
 This program is free software: you can redistribute it and/or modify 
