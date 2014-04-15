@@ -49,6 +49,10 @@ module CustomizeNotificationUserPatch
     def notify_for_issue_relations?(relation_type)
       notify_for_attribute?(:relation)
     end
+    
+    def notify_for_issue_attachment?(property_key)
+      notify_for_attribute?(:attachment)
+    end
 
     def notify_for_attribute?(attribute)
       enabled_notifications.include?(attribute.to_s)

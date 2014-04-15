@@ -188,6 +188,19 @@ class IssueTest < ActiveSupport::TestCase
     assert notify_about?
   end
 
+  def test_notify_if_attachment_added
+    set_tmp_attachments_directory
+    add_notification_attribute :attachment
+    init_journal
+    @issue.save_attachments({
+      'p0' => {'file' => mock_file_with_options(:original_filename => 'upload')},
+      '3' => {'file' => mock_file_with_options(:original_filename => 'bar')},
+      '1' => {'file' => mock_file_with_options(:original_filename => 'foo')}
+    })
+    @issue.attach_saved_attachments
+    assert notify_about?
+  end
+
   def test_notify_if_project_specific_custom_field_set
     return unless project_specific_plugin_installed?
     add_notification_attribute :psec_field_changed
