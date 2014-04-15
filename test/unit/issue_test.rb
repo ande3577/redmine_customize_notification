@@ -1,6 +1,7 @@
 require File.expand_path('../../test_helper', __FILE__)
 
 class IssueTest < ActiveSupport::TestCase
+  extend NotificationEvents
   fixtures :projects, :users, :members, :member_roles, :roles,
            :groups_users,
            :trackers, :projects_trackers,
@@ -187,6 +188,21 @@ class IssueTest < ActiveSupport::TestCase
     assert notify_about?
   end
   
+  def test_notify_if_project_specific_custom_field_set
+    return unless project_specific_plugin_installed?
+    add_notification_attribute :psec_field_changed
+    init_journal
+    update_project_specific_custom_value
+    assert notify_about?
+  end
+
+  def test_dont_notify_if_project_specific_custom_field_not_set
+    return unless project_specific_plugin_installed?
+    init_journal
+    update_project_specific_custom_value
+    assert !notify_about?
+  end
+  
   private
   def notify_about?(issue = @issue)
     @user.save!
@@ -259,6 +275,23 @@ class IssueTest < ActiveSupport::TestCase
 
   def update_user_custom_value(user_id=@user.id.to_s)
     @issue.custom_field_values = { @user_custom_value.custom_field.id => user_id}
+  end
+
+  def project_specific_plugin_installed?
+    IssueTest::project_specific_plugin_installed?
+  end
+
+  def update_project_specific_custom_value(value='New Value')
+    @issue.custom_field_values = {project_specific_custom_field.id => value}
+  end
+
+  def project_specific_custom_field
+    return @project_specific_custom_field if @project_specific_custom_field
+    @project_specific_custom_field = PSpecIssueCustomField.new(:name => 'project specific field', :project => @issue.project, :field_format=>'string', :editable => 'true')
+    @project_specific_custom_field.trackers << @issue.tracker
+    @project_specific_custom_field.save!
+    @issue.reload
+    @project_specific_custom_field
   end
 
 

@@ -29,4 +29,16 @@ module NotificationEvents
       false
     end
   end
+
+  def project_specific_plugin_installed?
+    begin
+      Redmine::Plugin.find('redmine_project_specific_custom_field')
+    rescue Redmine::PluginNotFound
+      false
+    end
+  end
+
+  def project_specific_custom_field?(field)
+    project_specific_plugin_installed? and field.type == 'PSpecIssueCustomField'
+  end
 end

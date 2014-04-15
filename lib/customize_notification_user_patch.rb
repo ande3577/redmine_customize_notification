@@ -33,11 +33,12 @@ module CustomizeNotificationUserPatch
 
     def notify_for_custom_field?(custom_field_id, old_value, new_value)
       return true if custom_field_notifications.include?(custom_field_id.to_s)
-      field = IssueCustomField.find(custom_field_id)
+      field = CustomField.find(custom_field_id)
       if field.field_format == 'user'
         return true if changed_to_me_notifications.include?(custom_field_id.to_s) and new_value and is_or_belongs_to?(User.find(new_value))
         return true if changed_from_me_notifications.include?(custom_field_id.to_s) and old_value and is_or_belongs_to?(User.find(old_value))
       end
+      return notify_for_attribute?(:psec_field_changed) if User.project_specific_custom_field?(field)
       false
     end
 

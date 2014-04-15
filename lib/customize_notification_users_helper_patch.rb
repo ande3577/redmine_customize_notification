@@ -18,22 +18,17 @@ module CustomizeNotificationUsersHelperPatch
       NotificationEvents::ISSUE_EVENTS.each do |ev, label|
         dependent_event = UsersHelper.dependent_event?(ev)
         h << '<ul>' if dependent_event
-        h << '<li>'
-        h << check_box_tag(
-            'pref[enabled_notifications][]',
-             ev,
-             user.enabled_notifications.include?(ev.to_s),
-             :onchange => "draw()",
-             :id => "enabled_notifications_#{ev.to_s}"
-          )
-        h << t(label)
-        h << '</li>'
+        h << notification_attribute_checkbox_tag(ev, label, user)
         h << '</ul>' if dependent_event
       end
       h << hidden_field_tag('pref[enabled_notifications][]', '')
       IssueCustomField.all.each do |field|
         h << custom_field_notification_checkbox_tag(field, user)
       end
+      if UsersHelper.project_specific_plugin_installed?
+        h << notification_attribute_checkbox_tag(:psec_field_changed, :notification_event_project_specific_custom_field_changed, user)
+      end
+
       h << hidden_field_tag('pref[custom_field_notifications][]', '')
       h << hidden_field_tag('pref[changed_to_me_notifications][]', '')
       h << hidden_field_tag('pref[changed_from_me_notifications][]', '')
@@ -47,6 +42,19 @@ module CustomizeNotificationUsersHelperPatch
   end
   
   private
+
+  def notification_attribute_checkbox_tag(event, label, user)
+    h = '<li>'
+    h << check_box_tag(
+         'pref[enabled_notifications][]',
+         event,
+         user.enabled_notifications.include?(event.to_s),
+         :onchange => "draw()",
+         :id => "enabled_notifications_#{event.to_s}"
+      )
+    h << t(label)
+    h << '</li>'
+  end
   
   def custom_field_notification_checkbox_tag(field, user)
     if field.field_format == 'user'
