@@ -19,7 +19,8 @@ module NotificationEvents
     :estimated_hours => :notification_event_estimated_time_changed,
     :parent_issue_id => :notification_event_parent_issue_changed,
     :notes => :notification_event_issue_commented_on,
-    :relation => :notification_event_issue_relation_changed
+    :relation => :notification_event_issue_relation_changed,
+    :attachment => :notification_event_attachment
   }.freeze
   
   def dependent_event?(event)
