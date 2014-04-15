@@ -1,6 +1,6 @@
 require File.expand_path('../../test_helper', __FILE__)
 
-class IssueTest < ActiveSupport::TestCase
+class IssueRelationTest < ActiveSupport::TestCase
   extend NotificationEvents
   fixtures :projects, :users, :members, :member_roles, :roles,
            :groups_users,
@@ -38,11 +38,11 @@ class IssueTest < ActiveSupport::TestCase
   end
 
   private
-  def notify_about?(issue_relation = issue_relation)
+  def notify_about?(relation = issue_relation)
     @user.save!
     @user.pref.save!
     @user.reload
-    issue_relation.save!
+    relation.save!
     delivery = ActionMailer::Base.deliveries.last
     return false if delivery.nil?
     mail = @user.mail
