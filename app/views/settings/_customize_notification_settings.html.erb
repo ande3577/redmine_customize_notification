@@ -1,0 +1,11 @@
+<% content_for :header_tags do %>
+    <%= javascript_include_tag 'customize_notification', :plugin => 'redmine_customize_notification' %>
+    <%= stylesheet_link_tag 'customize_notification', :plugin => 'redmine_customize_notification' %>
+<% end %>
+
+<h2><%= l :notification_event_default_field_options %></h2>
+
+<%= content_tag 'ul', :id => 'notified-issue-default-fields-list',
+        :class => "projects issue-notification-list" do %>
+  <%= render_default_notification_events_settings %>
+<% end %>

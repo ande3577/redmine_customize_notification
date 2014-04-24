@@ -1,0 +1,4 @@
+<%= content_tag 'ul', :id => 'notified-issue-fields-list',
+  :class => "projects issue-notification-list" do %>
+  <%= render_notification_events_for_user(@user) %>
+<% end %>

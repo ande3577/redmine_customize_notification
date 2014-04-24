@@ -73,12 +73,29 @@ module CustomizeNotificationUserPatch
     def changed_from_me_notifications
       get_preference_hash(:changed_from_me_notifications)
     end
+
+    def load_default_notification_settings
+      [:enabled_notifications, 
+        :custom_field_notifications, 
+        :changed_to_me_notifications, 
+        :changed_from_me_notifications].each do |setting|
+          load_default_notification_hash(setting)
+        end
+    end
   end
   
   private
     def get_preference_hash(identifier)
       return self.pref[identifier] if self.pref[identifier]
       []
+    end
+
+    def plugin_settings
+      Setting.plugin_redmine_customize_notification
+    end
+
+    def load_default_notification_hash(setting_name)
+      self.pref[setting_name] = plugin_settings[setting_name]
     end
   
 end

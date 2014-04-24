@@ -27,4 +27,6 @@ en:
   notification_event_issue_relation_changed: "Issue relation changed"
   notification_event_project_specific_custom_field_changed: "Project specific custom field changed"
   notification_event_attachment: "Attachment added/removed to issue"
+  notification_event_default_field_options: "Default Notification Fields"
+  notification_event_restore_defaults: "Restore default fields"
   text_user_custom_notification_fields_option: "When an issue is updated, you will receive a notification only if the selected fields are changed."

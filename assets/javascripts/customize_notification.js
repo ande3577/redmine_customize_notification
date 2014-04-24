@@ -11,4 +11,16 @@ var draw = function() {
   disable_control($(enabled_notifications_issue_assignee_from_me), issue_assignee_changed);
 };
 
+var restore_notification_defaults = function(url, target) {
+  $.ajax({
+    url: url,
+    type: 'get',
+    dataType: 'html',
+    success: function(data){
+      $('#'+target).html(data);
+      draw();
+    }
+  });
+}
+
 $(document).ready(draw);

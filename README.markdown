@@ -26,6 +26,9 @@ will only be applied when issues are modified
 
 ![account notification settings](assets/images/mail_settings.png "Notification settings in My Account")
 
+The plugin settings contains a list of default fields.  If a user selects "Restore 
+default fields" these settings will be loaded.
+
 ## License
 
 This program is free software: you can redistribute it and/or modify 
