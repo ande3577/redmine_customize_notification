@@ -29,6 +29,9 @@ will only be applied when issues are modified
 The plugin settings contains a list of default fields.  If a user selects "Restore 
 default fields" these settings will be loaded.
 
+Currently only issue fields are available for customization other notification
+types are not supported.
+
 ## License
 
 This program is free software: you can redistribute it and/or modify 
