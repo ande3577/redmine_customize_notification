@@ -9,7 +9,7 @@ notifications they receive.
 It is compatible with versions 2.4.x and 2.5.x.  Other versions may or may not work.
 
 Please report issues to: 
-  https://github.com/ande3577/redmine_project_alias/issues
+  https://github.com/ande3577/redmine_customize_notification/issues
 
 ## Installation
 
