@@ -47,7 +47,9 @@
         <%= render :partial => 'users/notification_fields' %>
       <% end %>
       <p><em class="info"><%= l(:text_user_custom_notification_fields_option) %></em></p>
-      <p><%= link_to_function l(:notification_event_restore_defaults), "restore_notification_defaults('#{url_for(:controller => :customize_notifications, :action => :restore_defaults, :id => @user.id)}', 'notified-issue-fields-list');" %></p>
+      <% if @user.id %>
+        <p><%= link_to_function l(:notification_event_restore_defaults), "restore_notification_defaults('#{url_for(:controller => :customize_notifications, :action => :restore_defaults, :id => @user.id)}', 'notified-issue-fields-list');" %></p>
+      <% end %>
     <% end %>
   <% end %>
 
