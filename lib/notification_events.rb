@@ -21,7 +21,7 @@ module NotificationEvents
     :notes => :notification_event_issue_commented_on,
     :relation => :notification_event_issue_relation_changed,
     :attachment => :notification_event_attachment
-  }.freeze
+  }
   
   def dependent_event?(event)
     case event
