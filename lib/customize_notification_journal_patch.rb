@@ -27,7 +27,7 @@ module CustomizeNotificationJournalPatch
   def select_notified_users(notified)
     # print("\nJournal = #{self.inspect}\n")
     return notified unless notified
-    notified.select! {|user| should_notify_user?(user)}
+    notified.select! {|user| user.logged? && should_notify_user?(user)}
     notified
   end
 
