@@ -27,11 +27,12 @@ module CustomizeNotificationJournalPatch
   def select_notified_users(notified)
     # print("\nJournal = #{self.inspect}\n")
     return notified unless notified
-    notified.select! {|user| user.logged? && should_notify_user?(user)}
+    notified.select! {|user| should_notify_user?(user)}
     notified
   end
 
   def should_notify_user?(user)
+    return false if user.anonymous?
     return true if journalized_type != 'Issue' or user.notify_for_all_fields?
     return true if user.notify_for_attribute?(:notes) and notes and notes.length > 0
     # print("JournalDetails:\n")

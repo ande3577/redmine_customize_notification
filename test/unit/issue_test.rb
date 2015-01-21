@@ -21,6 +21,7 @@ class IssueTest < ActiveSupport::TestCase
     @user.pref[:notify_for_all_fields] = false
     User.current = @user
     ActionMailer::Base.deliveries.clear
+    @user_destroyed = false
   end
 
   def teardown
@@ -52,6 +53,15 @@ class IssueTest < ActiveSupport::TestCase
     assert @user.notify_for_attribute?(:subject)
     @issue.subject = 'new subject'
     assert notify_about?
+  end
+
+  def test_handle_deleted_user
+    init_journal
+    add_notification_attribute(:subject)
+    @user.destroy
+    @user_destroyed = true
+    @issue.subject = 'new subject'
+    @issue.save!
   end
 
   def test_do_not_notify_if_subject_unchanged
@@ -233,6 +243,7 @@ class IssueTest < ActiveSupport::TestCase
   end
 
   def clear_notification_attributes
+    return if @user_destroyed
     @user.pref[:enabled_notifications] = []
     @user.pref[:custom_field_notifications] = []
     @user.pref[:changed_to_me_notifications] = []
